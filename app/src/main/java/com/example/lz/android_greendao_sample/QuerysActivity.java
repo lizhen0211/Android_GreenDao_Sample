@@ -7,6 +7,7 @@ import android.view.View;
 import com.example.lz.android_greendao_sample.customtype.MyTimestamp;
 import com.example.lz.android_greendao_sample.dao.CityDao;
 import com.example.lz.android_greendao_sample.dao.CustomTypeEntityDao;
+import com.example.lz.android_greendao_sample.dao.ProvinceDao;
 
 import org.greenrobot.greendao.query.CloseableListIterator;
 import org.greenrobot.greendao.query.LazyList;
@@ -119,7 +120,20 @@ public class QuerysActivity extends BaseActivity {
     }
 
     public void OnExecuting_Queries_multiple_timesClick(View view) {
-
+        ProvinceDao provinceDao = getDaoSession().getProvinceDao();
+        QueryBuilder<Province> provinceQueryBuilder = provinceDao.queryBuilder();
+        provinceQueryBuilder.where(ProvinceDao.Properties.Name.like("?"));
+        Query<Province> query = provinceQueryBuilder.build();
+        query.setParameter(0, "%辽%");
+        List<Province> provinces1 = query.list();
+        for (Province province : provinces1) {
+            Log.e("province", " name: " + province.getName() + " alias: " + province.getAlias() + " populationQuantity :" + province.getPopulationQuantity());
+        }
+        query.setParameter(0, "%浙%");
+        List<Province> provinces2 = query.list();
+        for (Province province : provinces2) {
+            Log.e("province", " name: " + province.getName() + " alias: " + province.getAlias() + " populationQuantity :" + province.getPopulationQuantity());
+        }
     }
 
     public void OnExecuting_queries_in_multiple_threadsClick(View view) {
