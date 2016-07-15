@@ -8,6 +8,9 @@ import com.example.lz.android_greendao_sample.customtype.MyTimestamp;
 import com.example.lz.android_greendao_sample.dao.CityDao;
 import com.example.lz.android_greendao_sample.dao.CustomTypeEntityDao;
 
+import org.greenrobot.greendao.query.CloseableListIterator;
+import org.greenrobot.greendao.query.LazyList;
+import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.Date;
@@ -28,11 +31,18 @@ public class QuerysActivity extends BaseActivity {
 //                .orderAsc(CityDao.Properties.Name)
 //                .list();
 
-        QueryBuilder<City> cityQueryBuilder = cityDao.queryBuilder();
-        cityQueryBuilder.where(CityDao.Properties.IsTerritory.eq(true),
-                cityQueryBuilder.or(CityDao.Properties.IsCapital.eq(true), CityDao.Properties.PopulationQuantity.gt(1000 * 1000 * 10)));
-        List<City> cities = cityQueryBuilder.list();
+        //SELECT * FROM CITY T  WHERE T.IS_TERRITORY=1 AND (T.IS_CAPITAL=1 OR T.POPULATION_QUANTITY>5000000);
+//        QueryBuilder<City> cityQueryBuilder = cityDao.queryBuilder();
+//        cityQueryBuilder.where(CityDao.Properties.IsTerritory.eq(true),
+//                cityQueryBuilder.or(CityDao.Properties.IsCapital.eq(true), CityDao.Properties.PopulationQuantity.gt(5000000)));
+//        List<City> cities = cityQueryBuilder.list();
 
+        //SELECT T."_id",T."NAME",T."IS_TERRITORY",T."IS_CAPITAL",T."POPULATION_QUANTITY",T."PROVINCE_ID" FROM "CITY" T  WHERE ((T."POPULATION_QUANTITY">? AND T."IS_CAPITAL"=?) OR T."IS_TERRITORY"=?)
+        QueryBuilder<City> cityQueryBuilder = cityDao.queryBuilder();
+        cityQueryBuilder.where(cityQueryBuilder.or(cityQueryBuilder.and(CityDao.Properties.PopulationQuantity.gt(5000000),
+                CityDao.Properties.IsCapital.eq(true)), CityDao.Properties.IsTerritory.eq(true)));
+
+        List<City> cities = cityQueryBuilder.list();
         for (City city : cities) {
             Log.e("City", "ID: " + city.getId()
                     + " NAME: " + city.getName()
@@ -61,6 +71,48 @@ public class QuerysActivity extends BaseActivity {
 
     public void OnQuery_and_LazyListClick(View view) {
 
+        //list() All entities are loaded into memory.
+        //The result is typically an ArrayList with no magic involved.
+        //Easiest to use.
+
+        /*********************list() begin*********************/
+        List<City> citiesList = getDaoSession().getCityDao().queryBuilder().list();
+        Log.e("citiesList", citiesList.toString());
+        /*********************list() end*********************/
+
+        //listLazy() Entities are loaded into memory on-demand.
+        // Once an element in the list is accessed for the first time,
+        // it is loaded and cached for future use. Must be closed
+        /*********************listLazy() begin*********************/
+        Query<City> buildLazy = getDaoSession().getCityDao().queryBuilder().build();
+        LazyList<City> cityListLazy = buildLazy.listLazy();
+        Log.e("cityListLazy", cityListLazy.toString());
+
+        // Closing again should not harm
+        cityListLazy.close();
+        cityListLazy.close();
+
+        /*********************listLazy() end*********************/
+
+
+        //listLazyUncached() A “virtual” list of entities:
+        // any access to a list element results in loading its data from the database.
+        // Must be closed
+        Query<City> buildLazyUncached = getDaoSession().getCityDao().queryBuilder().build();
+        LazyList<City> cityListLazyUncached = buildLazyUncached.listLazyUncached();
+        CloseableListIterator<City> iterator = cityListLazyUncached.listIteratorAutoClose();
+        while (iterator.hasNext()) {
+            Log.e("cityListLazyUncached", String.valueOf(cityListLazyUncached.isClosed()));
+            iterator.next();
+        }
+        Log.e("cityListLazyUncached", String.valueOf(cityListLazyUncached.isClosed()));
+
+
+        //listIterator() Let’s you iterate through results by loading the data on-demand (lazily).
+        // Data is not cached. Must be closed.
+        Query<City> buildlistIterator = getDaoSession().getCityDao().queryBuilder().build();
+        LazyList<City> citiesListIterator = buildlistIterator.listLazy();
+        CloseableListIterator<City> cityCloseableListIterator = citiesListIterator.listIterator();
     }
 
     public void OnExecuting_Queries_multiple_timesClick(View view) {

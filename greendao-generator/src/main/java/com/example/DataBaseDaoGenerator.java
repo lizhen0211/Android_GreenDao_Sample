@@ -22,6 +22,7 @@ public class DataBaseDaoGenerator {
         createSimple();
         createProvince();
         createCity();
+        createCustomType();
     }
 
     public void generate() throws Exception {
@@ -88,6 +89,15 @@ public class DataBaseDaoGenerator {
         city.addLongProperty("provinceID");
     }
 
+    /**
+     * 自定义数据库字段类型
+     */
+    protected void createCustomType() {
+        Entity entity = schema.addEntity("CustomTypeEntity");
+        entity.addIdProperty();
+        entity.addLongProperty("myCustomTimestamp").customType("com.example.lz.android_greendao_sample.customtype.MyTimestamp",
+                "com.example.lz.android_greendao_sample.customtype.MyTimestampConverter");
+    }
 
     public static void main(String[] args) throws Exception {
         DataBaseDaoGenerator daoGenerator = new DataBaseDaoGenerator();
