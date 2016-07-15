@@ -9,6 +9,7 @@ import com.example.lz.android_greendao_sample.dao.CityDao;
 import com.example.lz.android_greendao_sample.dao.CustomTypeEntityDao;
 import com.example.lz.android_greendao_sample.dao.ProvinceDao;
 
+import org.greenrobot.greendao.Property;
 import org.greenrobot.greendao.query.CloseableListIterator;
 import org.greenrobot.greendao.query.LazyList;
 import org.greenrobot.greendao.query.Query;
@@ -173,8 +174,8 @@ public class QuerysActivity extends BaseActivity {
     public void OnRaw_queriesClick(View view) {
         CityDao cityDao = getDaoSession().getCityDao();
         Query<City> query = cityDao.queryBuilder().where(
-                new WhereCondition.StringCondition("PROVINCE_ID IN " +
-                        "(SELECT _id FROM PROVINCE)")).build();
+                new WhereCondition.StringCondition(CityDao.Properties.ProvinceID.columnName + " IN " +
+                        "(SELECT " + ProvinceDao.Properties.Id.columnName + " FROM PROVINCE)")).build();
         List<City> list = query.list();
         for (City city : list) {
             Log.e("list", city.getName());
