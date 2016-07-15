@@ -136,8 +136,37 @@ public class QuerysActivity extends BaseActivity {
         }
     }
 
-    public void OnExecuting_queries_in_multiple_threadsClick(View view) {
+    private Query<City> queryFromOtherThread;
 
+    public void OnExecuting_queries_in_multiple_threadsClick(View view) {
+        createQueryFromOtherThread();
+
+        //List<City> list1 = queryFromOtherThread.list();
+
+        Query<City> cityQuery = queryFromOtherThread.forCurrentThread();
+        List<City> list = cityQuery.list();
+        for (City city : list) {
+            Log.e("list", city.getName());
+        }
+    }
+
+    private void createQueryFromOtherThread() {
+        Thread thread = new Thread() {
+
+            @Override
+            public void run() {
+                CityDao cityDao = getDaoSession().getCityDao();
+                QueryBuilder<City> cityQueryBuilder = cityDao.queryBuilder();
+                cityQueryBuilder.limit(2).offset(1);
+                queryFromOtherThread = cityQueryBuilder.build();
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void OnRaw_queriesClick(View view) {
