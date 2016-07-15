@@ -13,6 +13,7 @@ import org.greenrobot.greendao.query.CloseableListIterator;
 import org.greenrobot.greendao.query.LazyList;
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.Date;
 import java.util.List;
@@ -170,7 +171,14 @@ public class QuerysActivity extends BaseActivity {
     }
 
     public void OnRaw_queriesClick(View view) {
-
+        CityDao cityDao = getDaoSession().getCityDao();
+        Query<City> query = cityDao.queryBuilder().where(
+                new WhereCondition.StringCondition("PROVINCE_ID IN " +
+                        "(SELECT _id FROM PROVINCE)")).build();
+        List<City> list = query.list();
+        for (City city : list) {
+            Log.e("list", city.getName());
+        }
     }
 
     public void OnDelete_queriesClick(View view) {
@@ -178,7 +186,9 @@ public class QuerysActivity extends BaseActivity {
     }
 
     public void OnTroubleshooting_queriesClick(View view) {
-
+        // It has prevents in the BaseApplication
+        //QueryBuilder.LOG_SQL = true;
+        //QueryBuilder.LOG_VALUES = true;
     }
 
 
