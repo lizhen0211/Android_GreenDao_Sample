@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.lz.android_greendao_sample.customtype.MyTimestamp;
 import com.example.lz.android_greendao_sample.dao.CityDao;
+import com.example.lz.android_greendao_sample.dao.CustomTypeEntityDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Date;
 import java.util.List;
 
 public class QuerysActivity extends BaseActivity {
@@ -41,8 +44,19 @@ public class QuerysActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 插入自定义类型
+     *
+     * @param view
+     */
     public void OnCustom_Types_as_ParametersClick(View view) {
-
+        CustomTypeEntityDao customTypeEntityDao = getDaoSession().getCustomTypeEntityDao();
+        CustomTypeEntity customTypeEntity = new CustomTypeEntity();
+        MyTimestamp myTimestamp = new MyTimestamp();
+        myTimestamp.timestamp = new Date().getTime();
+        customTypeEntity.setMyCustomTimestamp(myTimestamp);
+        customTypeEntityDao.insert(customTypeEntity);
+        Log.e("CustomTypesAsParameters", "entity Timestamp: " + customTypeEntity.getMyCustomTimestamp());
     }
 
     public void OnQuery_and_LazyListClick(View view) {

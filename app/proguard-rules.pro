@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#自定义数据库属性混淆配置
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
+ public static java.lang.String TABLENAME;
+ }
+-keep class **$Properties

@@ -24,6 +24,7 @@ public class DaoMaster extends AbstractDaoMaster {
         SimpleEntityDao.createTable(db, ifNotExists);
         ProvinceDao.createTable(db, ifNotExists);
         CityDao.createTable(db, ifNotExists);
+        CustomTypeEntityDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -31,6 +32,7 @@ public class DaoMaster extends AbstractDaoMaster {
         SimpleEntityDao.dropTable(db, ifExists);
         ProvinceDao.dropTable(db, ifExists);
         CityDao.dropTable(db, ifExists);
+        CustomTypeEntityDao.dropTable(db, ifExists);
     }
 
     /**
@@ -52,6 +54,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(SimpleEntityDao.class);
         registerDaoClass(ProvinceDao.class);
         registerDaoClass(CityDao.class);
+        registerDaoClass(CustomTypeEntityDao.class);
     }
 
     public DaoSession newSession() {
