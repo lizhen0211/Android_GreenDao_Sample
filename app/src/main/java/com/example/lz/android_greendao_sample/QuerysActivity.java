@@ -111,8 +111,11 @@ public class QuerysActivity extends BaseActivity {
         //listIterator() Let’s you iterate through results by loading the data on-demand (lazily).
         // Data is not cached. Must be closed.
         Query<City> buildlistIterator = getDaoSession().getCityDao().queryBuilder().build();
-        LazyList<City> citiesListIterator = buildlistIterator.listLazy();
-        CloseableListIterator<City> cityCloseableListIterator = citiesListIterator.listIterator();
+        CloseableListIterator<City> cityCloseableListIterator = buildlistIterator.listIterator();
+        while (cityCloseableListIterator.hasNext()) {
+            City next = iterator.next();
+            Log.e("citiesListIterator", next.toString());
+        }
     }
 
     public void OnExecuting_Queries_multiple_timesClick(View view) {
