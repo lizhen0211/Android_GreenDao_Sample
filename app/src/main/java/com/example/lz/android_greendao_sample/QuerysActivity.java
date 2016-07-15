@@ -17,8 +17,10 @@ import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class QuerysActivity extends BaseActivity {
 
@@ -116,9 +118,20 @@ public class QuerysActivity extends BaseActivity {
         // Data is not cached. Must be closed.
         Query<City> buildlistIterator = getDaoSession().getCityDao().queryBuilder().build();
         CloseableListIterator<City> cityCloseableListIterator = buildlistIterator.listIterator();
-        while (cityCloseableListIterator.hasNext()) {
-//            City next = iterator.next();
-//            Log.e("citiesListIterator", next.toString());
+
+        try {
+            while (cityCloseableListIterator.hasNext()) {
+                cityCloseableListIterator.next();
+                Log.e("cityListIterator", cityCloseableListIterator.toString());
+            }
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            cityCloseableListIterator.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
