@@ -8,9 +8,10 @@ import com.example.lz.android_greendao_sample.customtype.MyTimestamp;
 import com.example.lz.android_greendao_sample.dao.CityDao;
 import com.example.lz.android_greendao_sample.dao.CustomTypeEntityDao;
 import com.example.lz.android_greendao_sample.dao.ProvinceDao;
+import com.example.lz.android_greendao_sample.dao.SimpleEntityDao;
 
-import org.greenrobot.greendao.Property;
 import org.greenrobot.greendao.query.CloseableListIterator;
+import org.greenrobot.greendao.query.DeleteQuery;
 import org.greenrobot.greendao.query.LazyList;
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -182,8 +183,26 @@ public class QuerysActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Bulk deletes do not delete individual entities,
+     * but all entities matching some criteria.
+     * To perform bulk deletes, create a QueryBuilder, call its buildDelete method,
+     * and execute the returned DeleteQuery. This part of the API may change in the future, e.g.
+     * convenience methods may be added etc.
+     * Keep in mind, that bulk deletes currently do not affect entities in the identity scope, e.g.
+     * you could “resurrect” deleted entities if they have been cached before and are accessed by their ID (load method).
+     * Consider clearing the identity scope for now, if that may cause issues for your use case.
+     *
+     * @param view
+     */
     public void OnDelete_queriesClick(View view) {
-
+        SimpleEntityDao simpleEntityDao = getDaoSession().getSimpleEntityDao();
+        QueryBuilder<SimpleEntity> builder = simpleEntityDao.queryBuilder().where(SimpleEntityDao.Properties.SimpleString.like("%updated%"));
+        Query<SimpleEntity> query = builder.build();
+        DeleteQuery<SimpleEntity> deleteQuery = builder.buildDelete();
+        Log.e("Delete_querie", query.list().size() + "");
+        deleteQuery.executeDeleteWithoutDetachingEntities();
+        Log.e("Delete_querie", query.list().size() + "");
     }
 
     public void OnTroubleshooting_queriesClick(View view) {
