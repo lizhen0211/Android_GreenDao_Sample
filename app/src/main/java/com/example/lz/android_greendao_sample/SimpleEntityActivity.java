@@ -60,7 +60,6 @@ public class SimpleEntityActivity extends BaseActivity {
                 ge(0)).orderAsc(SimpleEntityDao.Properties.Id).list();
         for (SimpleEntity simpleEntity : simpleEntities) {
             Log.e("queryEntities", "query entity, ID: " + simpleEntity.getId() + "  SimpleString: " + simpleEntity.getSimpleString());
-
         }
     }
 

@@ -81,8 +81,8 @@ public class QuerysActivity extends BaseActivity {
 
         /*********************list() begin*********************/
         List<City> citiesList = getDaoSession().getCityDao().queryBuilder().list();
-        Log.e("citiesList", citiesList.toString());
-        /*********************list() end*********************/
+
+        /*********************list() end*********Log.e("citiesList", citiesList.toString());************/
 
         //listLazy() Entities are loaded into memory on-demand.
         // Once an element in the list is accessed for the first time,
@@ -117,8 +117,8 @@ public class QuerysActivity extends BaseActivity {
         Query<City> buildlistIterator = getDaoSession().getCityDao().queryBuilder().build();
         CloseableListIterator<City> cityCloseableListIterator = buildlistIterator.listIterator();
         while (cityCloseableListIterator.hasNext()) {
-            City next = iterator.next();
-            Log.e("citiesListIterator", next.toString());
+//            City next = iterator.next();
+//            Log.e("citiesListIterator", next.toString());
         }
     }
 
@@ -176,7 +176,7 @@ public class QuerysActivity extends BaseActivity {
         CityDao cityDao = getDaoSession().getCityDao();
         Query<City> query = cityDao.queryBuilder().where(
                 new WhereCondition.StringCondition(CityDao.Properties.ProvinceID.columnName + " IN " +
-                        "(SELECT " + ProvinceDao.Properties.Id.columnName + " FROM PROVINCE)")).build();
+                        "(SELECT " + ProvinceDao.Properties.Id.columnName + " FROM " + ProvinceDao.TABLENAME + ")")).build();
         List<City> list = query.list();
         for (City city : list) {
             Log.e("list", city.getName());
