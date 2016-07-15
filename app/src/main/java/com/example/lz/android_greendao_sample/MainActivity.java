@@ -29,4 +29,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, SimpleEntityActivity.class);
         startActivity(intent);
     }
+
+    public void onClickQueries(View view) {
+        Intent intent = new Intent(this, QuerysActivity.class);
+        startActivity(intent);
+    }
 }

@@ -10,8 +10,15 @@
 
     <Button
         android:id="@+id/simple_entity"
-        android:text="Open_SimpleEntity"
-        android:onClick="onClickSimpleEntity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="onClickSimpleEntity"
+        android:text="Open_SimpleEntity" />
+
+    <Button
+        android:id="@+id/queries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickQueries"
+        android:text="Queries" />
 </LinearLayout>

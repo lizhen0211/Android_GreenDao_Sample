@@ -20,6 +20,8 @@ public class DataBaseDaoGenerator {
         //schema.enableKeepSectionsByDefault();
         //schema.enableActiveEntitiesByDefault();
         createSimple();
+        createProvince();
+        createCity();
     }
 
     public void generate() throws Exception {
@@ -45,6 +47,47 @@ public class DataBaseDaoGenerator {
 
         simple.addContentProvider().readOnly();
     }
+
+    protected void createProvince() {
+        Entity province = schema.addEntity("Province");
+
+        //添加java doc
+        province.setJavaDoc("This entity is used by internal tests of greenDAO.\n" +
+                "(This JavaDoc is defined in the generator project.)");
+        //添加类注释
+        province.setCodeBeforeClass("// This is another test comment, you could also apply annotations like this");
+
+        //ID 添加属性注释
+        province.addIdProperty().javaDocField("JavaDoc test field");
+        //名称 添加get set 方法注释
+        province.addStringProperty("name").javaDocGetterAndSetter("province name");
+        //.codeBeforeField("@SerializedName(\"the-number-of-things\")")属性前添加代码，如“注解”
+        //别名
+        province.addStringProperty("alias");
+        //城市数量
+        province.addIntProperty("cityQuantity");
+        //人口数量
+        province.addLongProperty("populationQuantity");
+        //排名
+        province.addIntProperty("Ranking");
+    }
+
+    protected void createCity() {
+        Entity city = schema.addEntity("City");
+        //ID
+        city.addIdProperty();
+        //名称
+        city.addStringProperty("name");
+        //是否是直辖市
+        city.addBooleanProperty("isTerritory");
+        //是否是省会
+        city.addBooleanProperty("isCapital");
+        //人口数量
+        city.addLongProperty("populationQuantity");
+        //省ID
+        city.addLongProperty("provinceID");
+    }
+
 
     public static void main(String[] args) throws Exception {
         DataBaseDaoGenerator daoGenerator = new DataBaseDaoGenerator();
