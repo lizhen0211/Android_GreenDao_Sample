@@ -23,6 +23,7 @@ public class DataBaseDaoGenerator {
         createProvince();
         createCity();
         createCustomType();
+        createKeepSections();
     }
 
     public void generate() throws Exception {
@@ -97,6 +98,20 @@ public class DataBaseDaoGenerator {
         entity.addIdProperty();
         entity.addLongProperty("myCustomTimestamp").customType("com.example.lz.android_greendao_sample.customtype.MyTimestamp",
                 "com.example.lz.android_greendao_sample.customtype.MyTimestampConverter");
+    }
+
+    /**
+     * 创建保持属性，再次创建实体时，不会覆盖掉保持的属性和方法
+     */
+    protected void createKeepSections() {
+        Entity entity = schema.addEntity("KeepEntity");
+        //schema.enableKeepSectionsByDefault();
+        //or
+        entity.setHasKeepSections(true);
+
+        entity.addIdProperty();
+        entity.addStringProperty("type");
+        entity.addStringProperty("name");
     }
 
     public static void main(String[] args) throws Exception {
