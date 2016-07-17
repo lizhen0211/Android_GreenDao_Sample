@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SimpleEntityActivity" />
-        <activity android:name=".QuerysActivity"/>
+        <activity android:name=".QuerysActivity" />
+        <activity android:name=".KeepSectionsActivity"></activity>
     </application>
 
 </manifest>

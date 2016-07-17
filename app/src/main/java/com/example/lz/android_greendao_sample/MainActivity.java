@@ -34,4 +34,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, QuerysActivity.class);
         startActivity(intent);
     }
+
+    public void onKeepSectionsClcik(View view) {
+        Intent intent = new Intent(this, KeepSectionsActivity.class);
+        startActivity(intent);
+    }
 }
