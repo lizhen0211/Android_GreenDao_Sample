@@ -7,10 +7,13 @@ import android.view.View;
 
 import com.example.lz.android_greendao_sample.dao.DaoSession;
 import com.example.lz.android_greendao_sample.dao.SimpleEntityDao;
+import com.example.lz.android_greendao_sample.external_dao.SimpleExternalEntityDao;
 
 public class MainActivity extends Activity {
 
     SimpleEntityDao simpleEntityDao;
+
+    SimpleExternalEntityDao simpleExternalEntityDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,8 @@ public class MainActivity extends Activity {
 
         simpleEntityDao = daoSession.getSimpleEntityDao();
 
-
+        com.example.lz.android_greendao_sample.external_dao.DaoSession externalDaoSession = application.getExternalDaoSession();
+        simpleExternalEntityDao = externalDaoSession.getSimpleExternalEntityDao();
     }
 
     public void onClickSimpleEntity(View view) {
