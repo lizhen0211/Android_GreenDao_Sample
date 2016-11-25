@@ -34,7 +34,6 @@ public class RelationsActivity extends BaseActivity {
         customerEntity.setCustomerName("张三");
         for (int i = 0; i < 3; i++) {
             OrderEntity orderEntity = new OrderEntity();
-            orderEntity.setOrderID(Long.valueOf(i));
             orderEntity.setAmount(new Random(10).nextFloat());
             orderEntity.setCustomerID(customerEntity.getCustomerID());
             orderEntityDao.insertOrReplace(orderEntity);
@@ -46,7 +45,6 @@ public class RelationsActivity extends BaseActivity {
 
         for (int i = 3; i < 7; i++) {
             OrderEntity orderEntity = new OrderEntity();
-            orderEntity.setOrderID(Long.valueOf(i));
             orderEntity.setAmount(new Random(10).nextFloat());
             orderEntity.setCustomerID(customerEntity1.getCustomerID());
             orderEntityDao.insertOrReplace(orderEntity);
@@ -58,7 +56,6 @@ public class RelationsActivity extends BaseActivity {
 
         for (int i = 7; i < 10; i++) {
             OrderEntity orderEntity = new OrderEntity();
-            orderEntity.setOrderID(Long.valueOf(i));
             orderEntity.setAmount(new Random(10).nextFloat());
             orderEntity.setCustomerID(customerEntity2.getCustomerID());
             orderEntityDao.insertOrReplace(orderEntity);

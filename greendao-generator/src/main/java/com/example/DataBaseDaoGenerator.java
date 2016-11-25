@@ -28,6 +28,7 @@ public class DataBaseDaoGenerator {
         createCustomType();
         createKeepSections();
 
+        createOneToOne();
         createOneToMany();
 
         //创建存储卡中数据库
@@ -47,6 +48,10 @@ public class DataBaseDaoGenerator {
         daoGenerator.generateAll(externalSchema, "app/src-gen", "app/src-gen", "app/src/androidTest/java");
     }
 
+    protected void createOneToOne() {
+
+    }
+
     protected void createOneToMany() {
         //顾客表
         Entity customer = schema.addEntity("CustomerEntity");
@@ -54,7 +59,7 @@ public class DataBaseDaoGenerator {
         customer.addStringProperty("customerName");
         //订单表
         Entity order = schema.addEntity("OrderEntity");
-        order.addLongProperty("orderID").primaryKey();
+        order.addLongProperty("orderID").autoincrement().primaryKey();
         order.addFloatProperty("amount");
 
         //顾客与订单建立1对多关联
