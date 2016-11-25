@@ -11,14 +11,14 @@
 
     <Button
         android:id="@+id/simple_entity"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClickSimpleEntity"
         android:text="Open_SimpleEntity" />
 
     <Button
         android:id="@+id/queries"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="onClickQueries"
@@ -26,7 +26,7 @@
 
     <Button
         android:id="@+id/joins"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="onJoinsClcik"
@@ -34,7 +34,7 @@
 
     <Button
         android:id="@+id/keep"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="onKeepSectionsClcik"
@@ -42,7 +42,7 @@
 
     <Button
         android:id="@+id/relations"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="onRelationsClick"

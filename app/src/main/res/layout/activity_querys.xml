@@ -10,56 +10,56 @@
 
     <Button
         android:id="@+id/QueryBuilder"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onQueryBuilderClick"
         android:text="QueryBuilder" />
 
     <Button
         android:id="@+id/Custom_Types_as_Parameters"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="OnCustom_Types_as_ParametersClick"
         android:text="Custom_Types_as_Parameters" />
 
     <Button
         android:id="@+id/Query_and_LazyList"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="OnQuery_and_LazyListClick"
         android:text="Query_and_LazyList" />
 
     <Button
         android:id="@+id/Executing_Queries_multiple_times"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="OnExecuting_Queries_multiple_timesClick"
         android:text="Executing_Queries_multiple_times" />
 
     <Button
         android:id="@+id/Executing_queries_in_multiple_threads"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="OnExecuting_queries_in_multiple_threadsClick"
         android:text="Executing_queries_in_multiple_threads" />
 
     <Button
         android:id="@+id/Raw_queries"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="OnRaw_queriesClick"
         android:text="Raw_queries" />
 
     <Button
         android:id="@+id/Delete_queries"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="OnDelete_queriesClick"
         android:text="Delete_queries" />
 
     <Button
         android:id="@+id/Troubleshooting_queries"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="OnTroubleshooting_queriesClick"
         android:text="Troubleshooting_queries" />

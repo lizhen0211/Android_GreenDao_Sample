@@ -10,28 +10,28 @@
 
     <Button
         android:id="@+id/insert"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onInsertClick"
         android:text="insert_simple_entity" />
 
     <Button
         android:id="@+id/update"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onUpdateClick"
         android:text="update_simple_entity" />
 
     <Button
         android:id="@+id/delete"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onDeleteClick"
         android:text="delete_simple_entity" />
 
     <Button
         android:id="@+id/query"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onQueryClick"
         android:text="query_simple_entity" />

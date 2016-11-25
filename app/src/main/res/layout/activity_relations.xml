@@ -12,7 +12,7 @@
 
     <Button
         android:id="@+id/insertData"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -21,7 +21,7 @@
 
     <Button
         android:id="@+id/oneToOne"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/insertData"
         android:layout_centerHorizontal="true"
@@ -31,7 +31,7 @@
 
     <Button
         android:id="@+id/oneToMany"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/oneToOne"
         android:layout_centerHorizontal="true"
@@ -41,7 +41,7 @@
 
     <Button
         android:id="@+id/manyToMany"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/oneToMany"
         android:layout_centerHorizontal="true"
