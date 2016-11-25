@@ -13,7 +13,7 @@ public class BaseActivity extends Activity {
         return ((BaseApplication) getApplication()).getDaoSession();
     }
 
-    public com.example.lz.android_greendao_sample.external_dao.DaoSession getStorageDaoSession(){
+    public com.example.lz.android_greendao_sample.external_dao.DaoSession getExternalDaoSession(){
         return ((BaseApplication) getApplication()).getExternalDaoSession();
     }
 }

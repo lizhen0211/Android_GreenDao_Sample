@@ -17,7 +17,7 @@ public class BaseApplication extends Application {
     /**
      * A flag to show how easily you can switch from standard SQLite to the encrypted SQLCipher.
      */
-    public static final boolean ENCRYPTED = true;
+    public static final boolean ENCRYPTED = false;
 
     /**
      * 内部存储数据库session

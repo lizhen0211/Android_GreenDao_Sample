@@ -39,8 +39,18 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void onJoinsClcik(View view) {
+        Intent intent = new Intent(this, JoinsActivity.class);
+        startActivity(intent);
+    }
+
     public void onKeepSectionsClcik(View view) {
         Intent intent = new Intent(this, KeepSectionsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onRelationsClick(View view){
+        Intent intent = new Intent(this,RelationsActivity.class);
         startActivity(intent);
     }
 }
