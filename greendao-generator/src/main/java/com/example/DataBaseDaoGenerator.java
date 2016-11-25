@@ -2,6 +2,7 @@ package com.example;
 
 import org.greenrobot.greendao.generator.DaoGenerator;
 import org.greenrobot.greendao.generator.Entity;
+import org.greenrobot.greendao.generator.Property;
 import org.greenrobot.greendao.generator.Schema;
 
 public class DataBaseDaoGenerator {
@@ -27,6 +28,8 @@ public class DataBaseDaoGenerator {
         createCustomType();
         createKeepSections();
 
+        createOneToMany();
+
         //创建存储卡中数据库
         //Schema Entities belong to a schema. A schema is the first object you define. Call the constructor with the schema version and the default Java package:
         externalSchema = new Schema(1, "com.example.lz.android_greendao_sample.external_entity");
@@ -44,7 +47,23 @@ public class DataBaseDaoGenerator {
         daoGenerator.generateAll(externalSchema, "app/src-gen", "app/src-gen", "app/src/androidTest/java");
     }
 
-    protected void createExternalSimple(){
+    protected void createOneToMany() {
+        //顾客表
+        Entity customer = schema.addEntity("CustomerEntity");
+        customer.addLongProperty("customerID").primaryKey();
+        customer.addStringProperty("customerName");
+        //订单表
+        Entity order = schema.addEntity("OrderEntity");
+        order.addLongProperty("orderID").primaryKey();
+        order.addFloatProperty("amount");
+
+        //顾客与订单建立1对多关联
+        Property property = order.addLongProperty("customerID").getProperty();
+        order.addToOne(customer, property);
+        customer.addToMany(order, property).setName("orders");
+    }
+
+    protected void createExternalSimple() {
         Entity simpleStorageEntity = externalSchema.addEntity("SimpleExternalEntity");
         simpleStorageEntity.addIdProperty().autoincrement();
         simpleStorageEntity.addStringProperty("simpleString");
