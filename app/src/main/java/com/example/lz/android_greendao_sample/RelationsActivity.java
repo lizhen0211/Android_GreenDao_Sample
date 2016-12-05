@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.lz.android_greendao_sample.dao.CourseDao;
 import com.example.lz.android_greendao_sample.dao.CustomerEntityDao;
 import com.example.lz.android_greendao_sample.dao.DaoSession;
 import com.example.lz.android_greendao_sample.dao.OrderEntityDao;
 import com.example.lz.android_greendao_sample.dao.PersonDao;
 import com.example.lz.android_greendao_sample.dao.PersonInfoDao;
+import com.example.lz.android_greendao_sample.dao.StudentCourseRelationDao;
+import com.example.lz.android_greendao_sample.dao.StudentDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -25,6 +28,12 @@ public class RelationsActivity extends BaseActivity {
 
     private PersonInfoDao personInfoDao;
 
+    private CourseDao courseDao;
+
+    private StudentDao studentDao;
+
+    private StudentCourseRelationDao studentCourseRelationDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +43,9 @@ public class RelationsActivity extends BaseActivity {
         customerEntityDao = daoSession.getCustomerEntityDao();
         personDao = daoSession.getPersonDao();
         personInfoDao = daoSession.getPersonInfoDao();
+        courseDao = daoSession.getCourseDao();
+        studentDao = daoSession.getStudentDao();
+        studentCourseRelationDao = daoSession.getStudentCourseRelationDao();
     }
 
     public void insertData(View view) {
@@ -89,6 +101,49 @@ public class RelationsActivity extends BaseActivity {
         personInfo.setPerson(person);
         personInfoDao.insertOrReplace(personInfo);
         personDao.insertOrReplace(person);
+
+        //多对多关系
+        Course course = new Course();
+        course.setCourseId(1L);
+        course.setCourseName("数据结构");
+
+        Student student = new Student();
+        student.setStudentId(1000L);
+        student.setName("李四");
+
+        Course course1 = new Course();
+        course1.setCourseId(2L);
+        course1.setCourseName("操作系统");
+
+        Student student1 = new Student();
+        student1.setStudentId(2000L);
+        student1.setName("王五");
+
+        StudentCourseRelation relation = new StudentCourseRelation();
+        relation.setStudent(student);
+        relation.setCourse(course);
+
+        StudentCourseRelation relation1 = new StudentCourseRelation();
+        relation1.setStudent(student1);
+        relation1.setCourse(course);
+
+        StudentCourseRelation relation2 = new StudentCourseRelation();
+        relation2.setStudent(student);
+        relation2.setCourse(course1);
+
+        StudentCourseRelation relation3 = new StudentCourseRelation();
+        relation3.setStudent(student1);
+        relation3.setCourse(course);
+
+        studentDao.insertOrReplace(student);
+        studentDao.insertOrReplace(student1);
+        courseDao.insertOrReplace(course);
+        courseDao.insertOrReplace(course1);
+
+        studentCourseRelationDao.insertOrReplace(relation);
+        studentCourseRelationDao.insertOrReplace(relation1);
+        studentCourseRelationDao.insertOrReplace(relation2);
+        studentCourseRelationDao.insertOrReplace(relation3);
     }
 
     public void queryOneToOne(View view) {
@@ -128,6 +183,12 @@ public class RelationsActivity extends BaseActivity {
     }
 
     public void queryManyToMany(View view) {
-
+        List<StudentCourseRelation> list = studentCourseRelationDao.queryBuilder().list();
+        for (StudentCourseRelation relation : list) {
+            Course course = relation.getCourse();
+            Student student = relation.getStudent();
+            Log.v("course", course.getCourseName());
+            Log.v("student", student.getName());
+        }
     }
 }

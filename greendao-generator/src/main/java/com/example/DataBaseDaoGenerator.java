@@ -30,6 +30,7 @@ public class DataBaseDaoGenerator {
 
         createOneToOne();
         createOneToMany();
+        createManyToMany();
 
         //创建存储卡中数据库
         //Schema Entities belong to a schema. A schema is the first object you define. Call the constructor with the schema version and the default Java package:
@@ -81,6 +82,30 @@ public class DataBaseDaoGenerator {
         Property property = order.addLongProperty("customerID").getProperty();
         order.addToOne(customer, property);
         customer.addToMany(order, property).setName("orders");
+    }
+
+    protected void createManyToMany() {
+        //学生
+        Entity student = schema.addEntity("Student");
+        student.addLongProperty("studentId").primaryKey();
+        student.addStringProperty("name").notNull();
+
+        //课程
+        Entity course = schema.addEntity("Course");
+        course.addLongProperty("courseId").primaryKey();
+        course.addStringProperty("courseName").notNull();
+
+        //建立多对多关联
+
+        //中间表
+        Entity studentCourse = schema.addEntity("StudentCourseRelation");
+        Property studentId =  studentCourse.addLongProperty("studentId").getProperty();
+        Property courseId =  studentCourse.addLongProperty("courseId").getProperty();
+
+        studentCourse.addToOne(student,studentId);
+        studentCourse.addToOne(course,courseId);
+        student.addToMany(studentCourse, studentId);
+        course.addToMany(studentCourse,courseId);
     }
 
     protected void createExternalSimple() {
