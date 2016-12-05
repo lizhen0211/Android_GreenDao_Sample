@@ -23,12 +23,12 @@ public class JoinsActivity extends BaseActivity {
     }
 
     public void onSimpleJoinsClick(View view) {
-        ProvinceDao provinceDao = daoSession.getProvinceDao();
+        /*ProvinceDao provinceDao = daoSession.getProvinceDao();
         QueryBuilder<Province> provinceQueryBuilder = provinceDao.queryBuilder();
         provinceQueryBuilder.join(City.class, CityDao.Properties.ProvinceID);
         provinceQueryBuilder.where(CityDao.Properties.Name.eq("鞍山"));
         List<Province> list = provinceQueryBuilder.list();
-        System.out.print(list);
+        System.out.print(list);*/
     }
 
     public void onChainedJoinsClick(View view) {
