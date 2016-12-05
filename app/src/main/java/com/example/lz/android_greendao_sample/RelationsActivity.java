@@ -7,6 +7,8 @@ import android.view.View;
 import com.example.lz.android_greendao_sample.dao.CustomerEntityDao;
 import com.example.lz.android_greendao_sample.dao.DaoSession;
 import com.example.lz.android_greendao_sample.dao.OrderEntityDao;
+import com.example.lz.android_greendao_sample.dao.PersonDao;
+import com.example.lz.android_greendao_sample.dao.PersonInfoDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -19,6 +21,10 @@ public class RelationsActivity extends BaseActivity {
 
     private CustomerEntityDao customerEntityDao;
 
+    private PersonDao personDao;
+
+    private PersonInfoDao personInfoDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +32,12 @@ public class RelationsActivity extends BaseActivity {
         DaoSession daoSession = getDaoSession();
         orderEntityDao = daoSession.getOrderEntityDao();
         customerEntityDao = daoSession.getCustomerEntityDao();
+        personDao = daoSession.getPersonDao();
+        personInfoDao = daoSession.getPersonInfoDao();
     }
 
     public void insertData(View view) {
+        //一对多关系
         CustomerEntity customerEntity = new CustomerEntity();
         customerEntity.setCustomerID(1L);
         customerEntity.setCustomerName("张三");
@@ -64,9 +73,35 @@ public class RelationsActivity extends BaseActivity {
         customerEntityDao.insertOrReplace(customerEntity);
         customerEntityDao.insertOrReplace(customerEntity1);
         customerEntityDao.insertOrReplace(customerEntity2);
+
+        //一对一关系
+        PersonInfo personInfo = new PersonInfo();
+        personInfo.setAddress("沈阳");
+        personInfo.setMajor("程序员");
+        personInfo.setInfoID(1L);
+
+        Person person = new Person();
+        person.setName("张三");
+        person.setSex(1);
+        person.setPersonID(1L);
+
+        person.setPersonInfo(personInfo);
+        personInfo.setPerson(person);
+        personInfoDao.insertOrReplace(personInfo);
+        personDao.insertOrReplace(person);
     }
 
     public void queryOneToOne(View view) {
+        List<Person> list = personDao.queryBuilder().where(PersonDao.Properties.Name.eq("张三")).list();
+        for (Person person : list) {
+            PersonInfo personInfo = person.getPersonInfo();
+            Log.v("person", "name:" + person.getName() + " " + "sex:" + person.getSex() + " " + "major:" + personInfo.getMajor() + " " + "address:" + personInfo.getAddress());
+        }
+
+        List<PersonInfo> personInfos = personInfoDao.queryBuilder().where(PersonInfoDao.Properties.Address.eq("沈阳")).list();
+        for (PersonInfo info : personInfos) {
+            Log.v("personInfo", "address:" + info.getAddress() + " " + "name:" + info.getPerson().getName());
+        }
 
     }
 

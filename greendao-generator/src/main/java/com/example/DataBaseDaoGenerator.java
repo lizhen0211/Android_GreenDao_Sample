@@ -50,6 +50,21 @@ public class DataBaseDaoGenerator {
 
     protected void createOneToOne() {
 
+        Entity person = schema.addEntity("Person");
+        person.addLongProperty("personID").primaryKey().autoincrement();
+        person.addStringProperty("name");
+        //1 男；2 女
+        person.addIntProperty("sex");
+
+        Entity personInfo = schema.addEntity("PersonInfo");
+        personInfo.addLongProperty("infoID").primaryKey().autoincrement();
+        personInfo.addStringProperty("address");
+        personInfo.addStringProperty("major");
+
+        Property infoID = person.addLongProperty("infoID").getProperty();
+        person.addToOne(personInfo, infoID);
+        Property personID = personInfo.addLongProperty("personID").getProperty();
+        personInfo.addToOne(person, personID);
     }
 
     protected void createOneToMany() {
@@ -59,7 +74,7 @@ public class DataBaseDaoGenerator {
         customer.addStringProperty("customerName");
         //订单表
         Entity order = schema.addEntity("OrderEntity");
-        order.addLongProperty("orderID").autoincrement().primaryKey();
+        order.addLongProperty("orderID").primaryKey().autoincrement();
         order.addFloatProperty("amount");
 
         //顾客与订单建立1对多关联

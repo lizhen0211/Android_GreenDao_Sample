@@ -13,6 +13,8 @@ import com.example.lz.android_greendao_sample.Province;
 import com.example.lz.android_greendao_sample.City;
 import com.example.lz.android_greendao_sample.CustomTypeEntity;
 import com.example.lz.android_greendao_sample.KeepEntity;
+import com.example.lz.android_greendao_sample.Person;
+import com.example.lz.android_greendao_sample.PersonInfo;
 import com.example.lz.android_greendao_sample.CustomerEntity;
 import com.example.lz.android_greendao_sample.OrderEntity;
 
@@ -21,6 +23,8 @@ import com.example.lz.android_greendao_sample.dao.ProvinceDao;
 import com.example.lz.android_greendao_sample.dao.CityDao;
 import com.example.lz.android_greendao_sample.dao.CustomTypeEntityDao;
 import com.example.lz.android_greendao_sample.dao.KeepEntityDao;
+import com.example.lz.android_greendao_sample.dao.PersonDao;
+import com.example.lz.android_greendao_sample.dao.PersonInfoDao;
 import com.example.lz.android_greendao_sample.dao.CustomerEntityDao;
 import com.example.lz.android_greendao_sample.dao.OrderEntityDao;
 
@@ -38,6 +42,8 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig cityDaoConfig;
     private final DaoConfig customTypeEntityDaoConfig;
     private final DaoConfig keepEntityDaoConfig;
+    private final DaoConfig personDaoConfig;
+    private final DaoConfig personInfoDaoConfig;
     private final DaoConfig customerEntityDaoConfig;
     private final DaoConfig orderEntityDaoConfig;
 
@@ -46,6 +52,8 @@ public class DaoSession extends AbstractDaoSession {
     private final CityDao cityDao;
     private final CustomTypeEntityDao customTypeEntityDao;
     private final KeepEntityDao keepEntityDao;
+    private final PersonDao personDao;
+    private final PersonInfoDao personInfoDao;
     private final CustomerEntityDao customerEntityDao;
     private final OrderEntityDao orderEntityDao;
 
@@ -68,6 +76,12 @@ public class DaoSession extends AbstractDaoSession {
         keepEntityDaoConfig = daoConfigMap.get(KeepEntityDao.class).clone();
         keepEntityDaoConfig.initIdentityScope(type);
 
+        personDaoConfig = daoConfigMap.get(PersonDao.class).clone();
+        personDaoConfig.initIdentityScope(type);
+
+        personInfoDaoConfig = daoConfigMap.get(PersonInfoDao.class).clone();
+        personInfoDaoConfig.initIdentityScope(type);
+
         customerEntityDaoConfig = daoConfigMap.get(CustomerEntityDao.class).clone();
         customerEntityDaoConfig.initIdentityScope(type);
 
@@ -79,6 +93,8 @@ public class DaoSession extends AbstractDaoSession {
         cityDao = new CityDao(cityDaoConfig, this);
         customTypeEntityDao = new CustomTypeEntityDao(customTypeEntityDaoConfig, this);
         keepEntityDao = new KeepEntityDao(keepEntityDaoConfig, this);
+        personDao = new PersonDao(personDaoConfig, this);
+        personInfoDao = new PersonInfoDao(personInfoDaoConfig, this);
         customerEntityDao = new CustomerEntityDao(customerEntityDaoConfig, this);
         orderEntityDao = new OrderEntityDao(orderEntityDaoConfig, this);
 
@@ -87,6 +103,8 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(City.class, cityDao);
         registerDao(CustomTypeEntity.class, customTypeEntityDao);
         registerDao(KeepEntity.class, keepEntityDao);
+        registerDao(Person.class, personDao);
+        registerDao(PersonInfo.class, personInfoDao);
         registerDao(CustomerEntity.class, customerEntityDao);
         registerDao(OrderEntity.class, orderEntityDao);
     }
@@ -97,6 +115,8 @@ public class DaoSession extends AbstractDaoSession {
         cityDaoConfig.getIdentityScope().clear();
         customTypeEntityDaoConfig.getIdentityScope().clear();
         keepEntityDaoConfig.getIdentityScope().clear();
+        personDaoConfig.getIdentityScope().clear();
+        personInfoDaoConfig.getIdentityScope().clear();
         customerEntityDaoConfig.getIdentityScope().clear();
         orderEntityDaoConfig.getIdentityScope().clear();
     }
@@ -119,6 +139,14 @@ public class DaoSession extends AbstractDaoSession {
 
     public KeepEntityDao getKeepEntityDao() {
         return keepEntityDao;
+    }
+
+    public PersonDao getPersonDao() {
+        return personDao;
+    }
+
+    public PersonInfoDao getPersonInfoDao() {
+        return personInfoDao;
     }
 
     public CustomerEntityDao getCustomerEntityDao() {
